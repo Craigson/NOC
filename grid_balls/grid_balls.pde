@@ -1,21 +1,33 @@
+import peasy.test.*;
+import peasy.org.apache.commons.math.*;
+import peasy.*;
+import peasy.org.apache.commons.math.geometry.*;
+
+
 Grid griddle;
-float theta = 0.0;
+PeasyCam cam;
 
 void setup() {
   size(800, 800, P3D);
-  background(255);
-  griddle = new Grid(5, 50, 50, 100, 100);
+
+  cam = new PeasyCam(this, 300);
+  cam.setMinimumDistance(300);
+  cam.setMaximumDistance(1000);
+
+  //cam.setSuppressRollRotationMode();
+  griddle = new Grid(5, 60, 60, 700, 700);
 }
 
 void draw() {
   lights();
   background(0);
-  translate(0,0,-500);
+ 
+
+  // Change height of the camera with mouseY
   pushMatrix();
-  rotateX(PI/3);
+  translate(-width/2, -height/2, 0);
   griddle.display();
-  popMatrix();
   griddle.update();
-  println(frameRate);
+  popMatrix();
 
 }

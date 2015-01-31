@@ -12,6 +12,8 @@ class Grid {
   //float totalWidth, totalHeight; //determining the layout of the grid
   int count;
   float vert;
+  float[][] rad;
+  PVector worldCenter;
 
   //constructor -----------------
   Grid(float _radius, int _rows, int _cols, int _w, int _h) {
@@ -27,6 +29,8 @@ class Grid {
     spacingX = w/(cols-1);
     spacingY = h/(rows-1);
     vert = 0;
+    rad = new float[cols][rows]; //2D array to store radius values
+    worldCenter = new PVector(0,0,0);
   }
   
   //Methods -------------
@@ -40,11 +44,13 @@ class Grid {
       for (int j = 0; j < rows; j++)
       {
        z[i][j] = map(noise(xoff, yoff,zoff), 0, 1, -100, 100);
+       rad[i][j] = map(noise(xoff, yoff,zoff), 0, 1, 0, 15);
+       
         yoff += 0.03;
       }
       xoff += 0.05;
     }
-    zoff+=0.009;
+    zoff+=0.005;
 
   }
 
@@ -61,7 +67,8 @@ class Grid {
     for (int j = 0; j < z[i].length; j++) {
       pushMatrix();
       translate(0,0,z[i][j]);
-      sphere(radius);
+      //sphere(radius);
+      ellipse(0,0,rad[i][j],rad[i][j]);
       popMatrix();
       translate(spacingX, 0, 0);
     }
