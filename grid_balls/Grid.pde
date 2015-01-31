@@ -11,6 +11,7 @@ class Grid {
   int xTranslate, yTranslate;
   //float totalWidth, totalHeight; //determining the layout of the grid
   int count;
+  float vert;
 
   //constructor -----------------
   Grid(float _radius, int _rows, int _cols, int _w, int _h) {
@@ -23,33 +24,53 @@ class Grid {
     z = new float[cols][rows];
     xTranslate = (width-w)/2; //calculate the x-position of the top left sphere in the grid
     yTranslate = (height-h)/2; //calculate the y-position of the top left sphere in the grid
-    spacingX = w/cols-1;
-    spacingY = h/rows-1;
-    count = 0;
+    spacingX = w/(cols-1);
+    spacingY = h/(rows-1);
+    vert = 0;
   }
+  
   //Methods -------------
 
-  //calculate the z-value
+  //calculate the z-value (borrowed from Shiffman's example)
   void update() {
+        float xoff = 0;
+    for (int i = 0; i < cols; i++)
+    { 
+      float yoff = 0;
+      for (int j = 0; j < rows; j++)
+      {
+       z[i][j] = map(noise(xoff, yoff,zoff), 0, 1, -100, 100);
+        yoff += 0.03;
+      }
+      xoff += 0.05;
+    }
+    zoff+=0.009;
+
   }
 
   void display() {
-    fill(0);
+    fill(255);
+    noStroke();
+   // strokeWeight(0.25);
+    sphereDetail(9);
     pushMatrix(); //main grid push
     translate(xTranslate, yTranslate, 0);
    
-   for (int j = 0; j < rows; j++){
+   for (int i = 0; i < z.length; i++){
     pushMatrix();
-    for (int i = 0; i < cols; i++) {
+    for (int j = 0; j < z[i].length; j++) {
+      pushMatrix();
+      translate(0,0,z[i][j]);
       sphere(radius);
+      popMatrix();
       translate(spacingX, 0, 0);
     }
     popMatrix();
     translate(0,spacingY,0);
+
    }
     popMatrix(); //main grid pop
-    
-    
+
   }
 
   void pulse() {
