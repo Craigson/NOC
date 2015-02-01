@@ -17,13 +17,20 @@ int sphere_colour = 255; //set the initial sphere_colour
 int grid_resolution = 25; //set the initial grid resolution
 float amplitude = 1.25; //set the initial amplitude
 int grid_size = 500; //set the initial grid size
+int vertical_range = 100; //set the range for vertical travel of each sphere
 float x_Val = 0.03; //set the value by which the x-value of noise() increments
 float y_Val = 0.04; //set the value by which the y-value of noise() increments
 float z_Val = 0.005; ////set the value by which the x-value of noise() increments
 
+PFont f;
+
 void setup() {
   size(800, 800, P3D);
   cp5 = new ControlP5(this); //initialise the controlp5 object
+  
+  f = createFont("Arial", 12);
+  textFont(f);
+  
   
   cam = new PeasyCam(this, 0, 0, 0, 600); //initialise the peasycam object
   cam.rotateX(-45); //set the camera's starting angle at 45 degrees
@@ -64,20 +71,29 @@ void setup() {
     .setRange(3,120)
     .setHeight(15)
     .setWidth(200);
+    
+        //create a slider to control the dimensions of the grid
+  cp5.addSlider("grid_size")
+    .setPosition(width/2-50, 720)
+    .setRange(100,1500)
+    .setHeight(15)
+    .setWidth(200);
    
 //create a slider to control the amplitude of the waves
   cp5.addSlider("amplitude")
-    .setPosition(width/2-50, 720)
+    .setPosition(width/2-50, 740)
     .setRange(0.25,1.75)
     .setHeight(15)
     .setWidth(200);
     
-    //create a slider to control the dimensions of the grid
-  cp5.addSlider("grid_size")
-    .setPosition(width/2-50, 740)
-    .setRange(100,1200)
+ //create a slider to control the vertical range
+  cp5.addSlider("vertical_range")
+    .setPosition(width/2-50, 760)
+    .setRange(-300,300)
     .setHeight(15)
     .setWidth(200);
+    
+
     
     //create a vertical slider to control the value by which the x-offset increases
   cp5.addSlider("x_Val")
@@ -124,6 +140,7 @@ void draw() {
   pushMatrix();
   translate(-width/2, -height/2, 100); //position the grid so that it draws to the centre of the screen
   
+  griddle.range = vertical_range;
   griddle.amp = amplitude;
   griddle.rows = grid_resolution;
   griddle.cols = grid_resolution;
@@ -150,6 +167,9 @@ void gui() {
   fill(0,80);
   rect(5,675,width-10,120);
   cp5.draw(); //draw the controlP5 HUD
+  fill(125);
+  text("fps: " + frameRate, 10, 20); //draw the frameRate to the screen
+  text("click+drag to rotate, scroll to zoom", 10, 32);
   cam.endHUD();
   hint(ENABLE_DEPTH_TEST);
 }

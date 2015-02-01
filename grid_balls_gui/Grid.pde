@@ -13,9 +13,10 @@ class Grid {
   int sphereRes; //variable to store the resolution of the sphere segments
   float amp; //variable for scaling the amplitude of the waves
   int gridSize; //variable for determing the size of the grid (ie. cols x rows)
-  float incrementX;
-  float incrementY;
-  float incrementZ;
+  float incrementX; //value by which to increment x-offset
+  float incrementY; //value by which to increment y-offset
+  float incrementZ; //value by which to increment z-offset
+  int range;
 
   //constructor -----------------
   Grid() {
@@ -32,6 +33,7 @@ class Grid {
     incrementX = 0.0;
     incrementY= 0.0;
     incrementZ = 0.0;
+    range = 100;
   }
 
   //Methods -------------
@@ -54,14 +56,14 @@ class Grid {
       float yoff = 0.0;
       for (int j = 0; j < rows; j++)
       {
-        z[i][j] = map(noise(xoff, yoff, zoff), 0, 1, -100, 100);
+        z[i][j] = map(noise(xoff, yoff, zoff), 0, 1, -range, range);
         rad[i][j] = map(noise(xoff, yoff, zoff), 0, 1, 0, 15);
 
-        yoff += yy;
+        yoff += yy; //increment y-offset
       }
-      xoff += xx;
+      xoff += xx; //increment  x-offset
     }
-    zoff+= zz;
+    zoff+= zz; //increment z-offset
   }
   
   
