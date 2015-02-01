@@ -8,12 +8,9 @@ class Grid {
   float zoff; //perlin noise argument for z offset
   float[][] z; //2D array to store the z-position of each sphere
   float spacingX, spacingY; // x/y distance between each sphere
-  int xTranslate, yTranslate;
+  int xTranslate, yTranslate; //variables for positioning the top left corner of the grid
   //float totalWidth, totalHeight; //determining the layout of the grid
-  int count;
-  float vert;
-  float[][] rad;
-  PVector worldCenter;
+  float[][] rad; //declare a 2d array to store the radius values
 
   //constructor -----------------
   Grid(float _radius, int _rows, int _cols, int _w, int _h) {
@@ -28,19 +25,17 @@ class Grid {
     yTranslate = (height-h)/2; //calculate the y-position of the top left sphere in the grid
     spacingX = w/(cols-1);
     spacingY = h/(rows-1);
-    vert = 0;
     rad = new float[cols][rows]; //2D array to store radius values
-    worldCenter = new PVector(0,0,0);
   }
   
   //Methods -------------
 
   //calculate the z-value (borrowed from Shiffman's example)
   void update() {
-        float xoff = 0;
+        float xoff = 0.0;
     for (int i = 0; i < cols; i++)
     { 
-      float yoff = 0;
+      float yoff = 0.0;
       for (int j = 0; j < rows; j++)
       {
        z[i][j] = map(noise(xoff, yoff,zoff), 0, 1, -100, 100);
@@ -58,7 +53,7 @@ class Grid {
     fill(255);
     noStroke();
    // strokeWeight(0.25);
-    sphereDetail(9);
+    sphereDetail(12);
     pushMatrix(); //main grid push
     translate(xTranslate, yTranslate, 0);
    
@@ -67,8 +62,8 @@ class Grid {
     for (int j = 0; j < z[i].length; j++) {
       pushMatrix();
       translate(0,0,z[i][j]);
-      //sphere(radius);
-      ellipse(0,0,rad[i][j],rad[i][j]);
+      sphere(radius);
+    //  ellipse(0,0,rad[i][j],rad[i][j]);
       popMatrix();
       translate(spacingX, 0, 0);
     }
@@ -80,9 +75,5 @@ class Grid {
 
   }
 
-  void pulse() {
-  }
 
-
-  //draw spheres in a 2D grid, with all initial z-values equal to zero
 }
