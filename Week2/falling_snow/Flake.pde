@@ -4,40 +4,42 @@ class Flake {
   float mass, radius, lifespan, x, xoff;
 
   Flake() {
-    loc = new PVector(random(0, width), -10);
-    mass = random(2,10);
+    loc = new PVector(random(-width/2, width), -10);
+    mass = random(2, 10);
     radius = mass*0.8 ;
     acc = new PVector();
     vel = new PVector();
     lifespan = 2000;
-    xoff = random(-.01,0.1);
+    xoff = random(-.01, 0.1);
   }
 
   void run() {
-    update();
+    if (!isTrapped()) {
+      update();
+    }
     //  checkLocation();
     display();
+    lifespan -= 0.3;
   }
 
   void update() {
     loc.add(vel);
-    if (isTrapped()){
-      acc = new PVector(0,0);
-      vel = new PVector(0,0);
+    if (isTrapped()) {
+      acc = new PVector(0, 0);
+      vel = new PVector(0, 0);
     }
     vel.add(acc);
     acc.mult(0); //reset the acceleration every frame 
     //put the code for the dying particle here
-    lifespan -= 1;
-    
+
+
     float r = random(1);
-    if (r < 0.05){
+    if (r < 0.05) {
       xoff += 0.1;
-    }else { 
+    } else { 
       xoff += 0.005;
     }
-    loc.x += map(noise(xoff),0,1,-0.5,0.5);
-    
+    loc.x += map(noise(xoff), 0, 1, -0.5, 0.5);
   }
 
   boolean isMelted() {
@@ -64,9 +66,8 @@ class Flake {
   boolean isTrapped() {
     if (loc.y > height - 20) {
       return true;
-  } else {
-  return false;
-}
-}
-
+    } else {
+      return false;
+    }
+  }
 }
