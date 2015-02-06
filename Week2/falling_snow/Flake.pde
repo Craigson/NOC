@@ -2,6 +2,7 @@ class Flake {
 
   PVector loc, vel, acc;
   float mass, radius, lifespan, x, xoff;
+  boolean isTrapped = false;
 
   Flake() {
     loc = new PVector(random(-width/2, width), -10);
@@ -14,7 +15,7 @@ class Flake {
   }
 
   void run() {
-    if (!isTrapped()) {
+    if (!isTrapped) {
       update();
     }
     //  checkLocation();
@@ -24,7 +25,7 @@ class Flake {
 
   void update() {
     loc.add(vel);
-    if (isTrapped()) {
+    if (isTrapped) {
       acc = new PVector(0, 0);
       vel = new PVector(0, 0);
     }
@@ -53,7 +54,7 @@ class Flake {
 
   void display() {
     noStroke();
-    fill(255, 126);
+    fill(255, 220);
     ellipse(loc.x, loc.y, radius, radius);
   }
 
@@ -63,11 +64,11 @@ class Flake {
     acc.add(f);
   }
 
-  boolean isTrapped() {
-    if (loc.y > height - 20) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // boolean isTrapped() {
+  //   if (loc.y > height - 20) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }

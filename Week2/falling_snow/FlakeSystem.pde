@@ -28,12 +28,15 @@ class FlakeSystem {
     }
   }
 
-// void applyGravity(){
-//   for (Flake f : snowflakes){
-//     PVector gravity = new PVector(0,0.01*f.mass);
-//   }
-//}
-
+void checkLocation(PImage img1){
+  for (Flake f : snowflakes){
+  color pixelColour = img1.get(int(f.loc.x),int(f.loc.y));
+  // println(pixelColour);
+  if (pixelColour == -16777216){
+    f.isTrapped = true;
+  }
+}
+}
 
   void addFlake() {
     snowflakes.add(new Flake());
