@@ -5,20 +5,18 @@ class Flake {
   float x, xoff; //variables for perlin noise
   boolean isTrapped = false; //boolean variable for determining whether the flake is over a letter
   float c = 0.0001; //this is the drag co-efficient of the word
-  float theta, dTheta;
-  float r;
+float theta, dTheta;
 
   Flake() {
-    r = random(1);
-    loc = new PVector(random(-width/2, width), -10); //initialise the flake above the window
+    loc = new PVector(random(-100, width), -10); //initialise the flake above the window
     mass = random(4, 10);
-    radius = mass*0.4 ;
+    radius = mass*0.5 ;
     acc = new PVector();
     vel = new PVector();
-    lifespan = 1500; //set the lifespan of the flake, it will be removed when this runs out
+    lifespan = 2000; //set the lifespan of the flake, it will be removed when this runs out
     xoff = random(-.01, 0.1); //random offset for incrementing perlin noise
     theta = 0.0;
-    dTheta = random (-0.12, 0.12);
+    dTheta = random (-0.07, 0.07);
 }
 
   void run() {
@@ -66,7 +64,7 @@ class Flake {
 
   void display() {
     noStroke();
-    fill(255, 220);
+    fill(255, 245);
     // ellipse(loc.x, loc.y, radius, radius);
     pushMatrix();
     translate(loc.x, loc.y);

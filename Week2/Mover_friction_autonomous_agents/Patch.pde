@@ -24,10 +24,11 @@ class Patch{
     
       boolean isInside(Mover m){
 
-        //basic distance check to see if the mover is inside the patch
         PVector l = m.loc;
       float d = dist(loc.x,loc.y,l.x,l.y);
       
+      //if the distance between the centers is less than the sum of the radii
+      //the mover must be inside the patch
       if (d < rad + m.rad){
         return true;
       } else {

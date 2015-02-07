@@ -59,6 +59,11 @@ class FlakeSystem {
     }
   }
 
+void getWind(WindChannel w){
+  for (Flake f : snowflakes){
+    f.applyForce(w.applyWind(f));
+  }
+}
 
   void addFlake() {
     snowflakes.add(new Flake());

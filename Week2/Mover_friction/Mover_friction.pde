@@ -3,9 +3,9 @@ Patch [] patches;
 float count = 0;
 
 void setup() {
-  size(800, 600);
-  movers = new Mover[2]; //create an array of movers
-  patches = new Patch[2]; //create an array of friction patches
+  size(1200, 675);
+  movers = new Mover[150]; //create an array of movers
+  patches = new Patch[10]; //create an array of friction patches
   for (int i = 0; i < movers.length; i++) {
     movers[i] = new Mover();
   }
@@ -29,13 +29,13 @@ void draw() {
       if (patches[k].isInside(movers[j]) == true) {
         movers[j].applyForce(patches[k].calcDrag(movers[j]));
         movers[j].k = color(100, 200, 100);
-        println(frameCount + " " + j + " " + "i'm inside");
+        //println(frameCount + " " + j + " " + "i'm inside");
 
         //println();
       } else {
         // movers[j].k = color(0);
         movers[j].applyForce(movers[j].initForce);
-        println(frameCount + " " + j + " " + "Im outside");
+        //println(frameCount + " " + j + " " + "Im outside");
       }
 
     }
@@ -44,5 +44,5 @@ void draw() {
       movers[j].display();
   }
 
-  //println(frameRate);
+  println(frameRate);
 }
